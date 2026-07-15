@@ -1,0 +1,142 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:host::-webkit-scrollbar {
+  display: none;
+}
+
+.detalhes-card {
+  --cor-tipo: #3b82f6;
+
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-top: 3px solid var(--cor-tipo);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.detalhes-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--cor-tipo);
+  background-color: color-mix(in srgb, var(--cor-tipo) 12%, white);
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.detalhes-titulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+  word-break: break-word;
+}
+
+.tipoEntidade {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: var(--cor-tipo);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.detalhes-divisor {
+  border: 0;
+  border-top: 1px solid #f1f5f9;
+  margin: 12px 0;
+}
+
+.detalhes-vinculos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f8fafc;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+.vinculos-numero {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  background-color: #e2e8f0;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.vinculos-texto {
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.lista-vinculos {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.item-vinculo {
+  --cor-tipo: #64748b;
+
+  padding: 8px 10px;
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid var(--cor-tipo);
+  border-radius: 8px;
+  background-color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.item-vinculo:hover {
+  background-color: #f8fafc;
+  border-color: var(--cor-tipo);
+}
+
+.vinculo-rotulo {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.vinculo-nome {
+  font-size: 13px;
+  color: #1e293b;
+  word-break: break-word;
+}
+
+.detalhes-vazio {
+  padding: 24px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.detalhes-vazio p {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}

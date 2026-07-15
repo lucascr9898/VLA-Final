@@ -1,0 +1,80 @@
+:host {
+  display: block;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.tela-sistema-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.palco-grafo-host {
+  position: absolute;
+  inset: 16px;
+  z-index: 1;
+}
+
+.barraFiltros {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  max-width: min(680px, calc(100vw - 680px));
+
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.10);
+  padding: 10px 14px;
+}
+
+.colunaLista,
+.detalhesEntidades {
+  position: absolute;
+  top: 16px;
+  bottom: 16px;
+  width: 280px;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.10);
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.colunaLista {
+  left: 16px;
+}
+
+.detalhesEntidades {
+  right: 16px;
+  width: 320px;
+}
+
+@media (max-width: 1024px) {
+  .colunaLista,
+  .detalhesEntidades {
+    width: 240px;
+  }
+
+  .barraFiltros {
+    max-width: calc(100vw - 520px);
+  }
+}

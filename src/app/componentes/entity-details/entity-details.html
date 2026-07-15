@@ -1,0 +1,38 @@
+@if (selecaoDetalhes !== null) {
+  <div class="detalhes-card" [style.--cor-tipo]="cores[selecaoDetalhes.entidadeDetalhada.type]">
+    <span class="detalhes-tag">Entidade Selecionada</span>
+
+    <h2 class="detalhes-titulo">
+      {{ selecaoDetalhes.entidadeDetalhada.label }}
+    </h2>
+
+    <span class="tipoEntidade">
+      {{ icones[selecaoDetalhes.entidadeDetalhada.type] }} {{ selecaoDetalhes.entidadeDetalhada.type }}
+    </span>
+    <hr class="detalhes-divisor">
+
+    <div class="detalhes-vinculos">
+      <span class="vinculos-numero">{{ selecaoDetalhes.quantidade }}</span>
+      <span class="vinculos-texto">vínculos encontrados</span>
+    </div>
+
+    @if (selecaoDetalhes.vinculos.length > 0) {
+      <ul class="lista-vinculos">
+        @for (vinculo of selecaoDetalhes.vinculos; track vinculo.entidadeConectada.id) {
+          <li
+            class="item-vinculo"
+            [style.--cor-tipo]="cores[vinculo.entidadeConectada.type]"
+            (click)="selecionarVinculo(vinculo.entidadeConectada.id)"
+          >
+            <span class="vinculo-rotulo">{{ vinculo.icone }} {{ vinculo.rotuloRelacao }}</span>
+            <strong class="vinculo-nome">{{ vinculo.entidadeConectada.label }}</strong>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+} @else {
+  <div class="detalhes-vazio">
+    <p>Selecione uma entidade para ver os detalhes!</p>
+  </div>
+}

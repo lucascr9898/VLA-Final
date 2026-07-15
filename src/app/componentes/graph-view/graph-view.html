@@ -1,0 +1,23 @@
+<div class="palco-grafo">
+  <div #diagramaGrafo class="diagrama-grafo"></div>
+
+  <div class="acoes-grafo">
+    <button
+      type="button"
+      class="botao-acao-grafo"
+      (click)="restaurarRedeCompleta()"
+      title="Mostra todas as entidades e relações"
+    >
+      Mostrar tudo
+    </button>
+
+    <button
+      type="button"
+      class="botao-acao-grafo"
+      (click)="limparGrafo()"
+      title="Remove todos os nós e relações do grafo"
+    >
+      Resetar
+    </button>
+  </div>
+</div>

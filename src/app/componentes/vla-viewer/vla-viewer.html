@@ -1,0 +1,34 @@
+<div class="tela-sistema-container">
+
+  <app-graph-view
+    class="palco-grafo-host"
+    [entidades]="entidadesGrafico"
+    [relacoes]="relacoesGrafico"
+    [filtroAtivo]="filtroAtivo"
+    (entidadeSelecionada)="selecionarEntidade($event)"
+    (verRedeCompleta)="restaurarRedeCompleta()">
+  </app-graph-view>
+
+  <div class="barraFiltros">
+    <app-entity-type-filter
+      [filtroAtual]="filtroAtual"
+      (filtroAlterado)="atualizarFiltro($event)">
+    </app-entity-type-filter>
+  </div>
+
+  <div class="colunaLista">
+    <app-entity-list
+      (entidadeSelecionada)="selecionarEntidade($event)"
+      [idEntidade]="idEntidade"
+      [entidades]="entidades">
+    </app-entity-list>
+  </div>
+
+  <div class="detalhesEntidades">
+    <app-entity-details
+      [selecaoDetalhes]="selecaoDetalhes"
+      (entidadeSelecionada)="selecionarEntidade($event)">
+    </app-entity-details>
+  </div>
+
+</div>

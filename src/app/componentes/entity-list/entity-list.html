@@ -1,0 +1,26 @@
+<input
+  class="digitacao"
+  placeholder="Digite para pesquisar sua entidade..."
+  [value]="textoBusca"
+  (input)="buscarTexto($any($event.target).value)"
+>
+
+@if (entidadesVisiveis.length === 0) {
+  <div class="detalhes-vazio">
+    <p>Nenhuma entidade encontrada com essa busca! :(</p>
+  </div>
+} @else {
+  <ul>
+    @for (entidade of entidadesVisiveis; track entidade.id) {
+      <li
+        class="botoesEntidades"
+        [class.selecionado]="entidade.id === idEntidade"
+        [style.--cor-tipo]="cores[entidade.type]"
+        (click)="selecionarEntidade(entidade.id)"
+      >
+        <span class="tipo-tag">{{ icones[entidade.type] }} {{ entidade.type }}</span>
+        <strong>{{ entidade.label }}</strong>
+      </li>
+    }
+  </ul>
+}

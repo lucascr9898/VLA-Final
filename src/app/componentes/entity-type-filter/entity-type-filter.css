@@ -1,0 +1,63 @@
+.filtros-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.filtro-pilula {
+  --cor-tipo: #64748b;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  appearance: none;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 999px;
+
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #475569;
+
+  padding: 8px 14px;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.filtro-icone {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.filtro-pilula:hover {
+  border-color: var(--cor-tipo);
+  color: #1e293b;
+  transform: translateY(-1px);
+}
+
+.filtro-pilula.ativo {
+  background-color: var(--cor-tipo);
+  border-color: var(--cor-tipo);
+  color: #ffffff;
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--cor-tipo) 45%, transparent);
+}
+
+.filtro-pilula.ativo:hover {
+  color: #ffffff;
+  filter: brightness(1.05);
+}
+
+.filtro-pilula:active {
+  transform: translateY(0) scale(0.98);
+}

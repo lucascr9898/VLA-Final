@@ -1,0 +1,16 @@
+<div class="filtros-container">
+  @for (tipo of selecionaveis; track tipo) {
+    <button
+      type="button"
+      class="filtro-pilula"
+      [class.ativo]="filtroAtual === tipo"
+      [style.--cor-tipo]="cores[tipo]"
+      (click)="filtrarPorTipo(tipo)"
+      [attr.aria-pressed]="filtroAtual === tipo"
+      [title]="filtroAtual === tipo ? 'Clique para remover o filtro' : 'Filtrar por ' + tipo"
+    >
+      <span class="filtro-icone">{{ icones[tipo] }}</span>
+      <span class="filtro-rotulo">{{ tipo }}</span>
+    </button>
+  }
+</div>
