@@ -12,7 +12,8 @@
   <div class="barraFiltros">
     <app-entity-type-filter
       [filtroAtual]="filtroAtual"
-      (filtroAlterado)="atualizarFiltro($event)">
+      [tiposPresentes]="tiposPresentes"
+      (filtroAlterado)="atualizarFiltro($any($event))">
     </app-entity-type-filter>
   </div>
 
@@ -26,8 +27,7 @@
 
   <div class="detalhesEntidades">
     <app-entity-details
-      [selecaoDetalhes]="selecaoDetalhes"
-      (entidadeSelecionada)="selecionarEntidade($event)">
+      [selecaoDetalhes]="selecaoDetalhes">
     </app-entity-details>
   </div>
 

@@ -6,7 +6,7 @@ import { Relacao } from '../../models/relacao.model';
 import { ServicoVla } from '../../services/vla-data.service';
 import { EntityDetails, Vinculo } from '../entity-details/entity-details';
 import { GraphView } from '../graph-view/graph-view';
-import { ICONE_POR_TIPO } from '../../shared/entidade-visual';
+import { obterIconePorTipo } from '../../shared/entidade-visual';
 
 @Component({
   selector: 'app-vla-viewer',
@@ -21,8 +21,11 @@ export class VlaViewer implements OnInit {
   idEntidade: string | null = null;
   filtroAtual: TipoEntidade | null = null;
 
+  tiposPresentes: TipoEntidade[] = [];
+
   entidadesGrafico: Entidade[] = [];
   relacoesGrafico: Relacao[] = [];
+  entidadesLista: Entidade[] = [];
   filtroAtivo: boolean = false;
   selecaoDetalhes: { entidadeDetalhada: Entidade, quantidade: number, vinculos: Vinculo[] } | null = null;
 
@@ -33,6 +36,11 @@ export class VlaViewer implements OnInit {
       next: dados => {
         this.entidades = dados.entidades;
         this.relacoes = dados.relacoes;
+        
+        this.tiposPresentes = Array.from(
+          new Set(this.entidades.map(entidade => entidade.type))
+        );
+
         this.recalcularEstadoDerivado();
       },
       error: erro => console.error('Não foi possível carregar os dados do VLA:', erro)
@@ -59,6 +67,7 @@ export class VlaViewer implements OnInit {
     const { entidadesGrafico, relacoesGrafico } = this.calcularGrafico(this.idEntidade, this.filtroAtual);
     this.entidadesGrafico = entidadesGrafico;
     this.relacoesGrafico = relacoesGrafico;
+    this.entidadesLista = this.calcularListaFiltrada(this.filtroAtual);
     this.filtroAtivo = this.idEntidade !== null || this.filtroAtual !== null;
     this.selecaoDetalhes = this.calcularSelecaoDetalhes(this.idEntidade);
   }
@@ -80,6 +89,13 @@ export class VlaViewer implements OnInit {
     }
 
     return { entidadesGrafico: entidadesFiltradas, relacoesGrafico: relacoesFiltradas };
+  }
+
+  private calcularListaFiltrada(filtroAtual: TipoEntidade | null): Entidade[] {
+    if (filtroAtual === null) {
+      return [...this.entidades];
+    }
+    return this.entidades.filter(entidade => entidade.type === filtroAtual);
   }
 
   private calcularSelecaoDetalhes(idEntidade: string | null): { entidadeDetalhada: Entidade, quantidade: number, vinculos: Vinculo[] } | null {
@@ -104,7 +120,8 @@ export class VlaViewer implements OnInit {
         return {
           rotuloRelacao: relacao.label,
           entidadeConectada,
-          icone: ICONE_POR_TIPO[entidadeConectada.type],
+
+          icone: obterIconePorTipo(entidadeConectada.type),
         };
       })
       .filter((vinculo): vinculo is Vinculo => vinculo !== null);
