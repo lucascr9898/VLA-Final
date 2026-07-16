@@ -5,6 +5,8 @@
   (input)="buscarTexto($any($event.target).value)"
 >
 
+<span class="pEntidades">Entidades disponiveis: </span>
+
 @if (entidadesVisiveis.length === 0) {
   <div class="detalhes-vazio">
     <p>Nenhuma entidade encontrada com essa busca! :(</p>
@@ -15,10 +17,12 @@
       <li
         class="botoesEntidades"
         [class.selecionado]="entidade.id === idEntidade"
-        [style.--cor-tipo]="cores[entidade.type]"
+        [style.--cor-tipo]="obterCor(entidade.type)"
         (click)="selecionarEntidade(entidade.id)"
       >
-        <span class="tipo-tag">{{ icones[entidade.type] }} {{ entidade.type }}</span>
+        <span class="tipo-tag" (click)="filtrarPorTipo(entidade.type, $event)" title="Filtrar por {{ entidade.type }}">
+          {{ obterIcone(entidade.type) }} {{ entidade.type }}
+        </span>
         <strong>{{ entidade.label }}</strong>
       </li>
     }

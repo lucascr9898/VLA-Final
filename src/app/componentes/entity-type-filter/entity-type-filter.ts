@@ -9,7 +9,7 @@ import { CORES_POR_TIPO, ICONE_POR_TIPO, TODOS_OS_TIPOS } from '../../shared/ent
   styleUrl: './entity-type-filter.css'
 })
 export class EntityTypeFilter {
-  @Input() selecionaveis: TipoEntidade[] = TODOS_OS_TIPOS;
+  @Input() selecionaveis: TipoEntidade[] = TODOS_OS_TIPOS as TipoEntidade[];
 
   @Input() filtroAtual: TipoEntidade | null = null;
 

@@ -11,5 +11,5 @@ export type TipoEntidade =
 export interface Entidade {
   id: string;
   label:string;
-  type: TipoEntidade;
+  type: string;
 }

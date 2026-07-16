@@ -1,5 +1,5 @@
 @if (selecaoDetalhes !== null) {
-  <div class="detalhes-card" [style.--cor-tipo]="cores[selecaoDetalhes.entidadeDetalhada.type]">
+  <div class="detalhes-card" [style.--cor-tipo]="obterCor(selecaoDetalhes.entidadeDetalhada.type)">
     <span class="detalhes-tag">Entidade Selecionada</span>
 
     <h2 class="detalhes-titulo">
@@ -7,7 +7,7 @@
     </h2>
 
     <span class="tipoEntidade">
-      {{ icones[selecaoDetalhes.entidadeDetalhada.type] }} {{ selecaoDetalhes.entidadeDetalhada.type }}
+      {{ obterIcone(selecaoDetalhes.entidadeDetalhada.type) }} {{ selecaoDetalhes.entidadeDetalhada.type }}
     </span>
     <hr class="detalhes-divisor">
 
@@ -21,8 +21,7 @@
         @for (vinculo of selecaoDetalhes.vinculos; track vinculo.entidadeConectada.id) {
           <li
             class="item-vinculo"
-            [style.--cor-tipo]="cores[vinculo.entidadeConectada.type]"
-            (click)="selecionarVinculo(vinculo.entidadeConectada.id)"
+            [style.--cor-tipo]="obterCor(vinculo.entidadeConectada.type)"   
           >
             <span class="vinculo-rotulo">{{ vinculo.icone }} {{ vinculo.rotuloRelacao }}</span>
             <strong class="vinculo-nome">{{ vinculo.entidadeConectada.label }}</strong>
@@ -30,6 +29,9 @@
         }
       </ul>
     }
+
+
+
   </div>
 } @else {
   <div class="detalhes-vazio">

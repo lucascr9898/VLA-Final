@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EntityList } from "../entity-list/entity-list";
-import { TipoEntidade, Entidade } from '../../models/entidade.model';
+import { Entidade, TipoEntidade } from '../../models/entidade.model'; // Adicionado TipoEntidade aqui
 import { EntityTypeFilter } from "../entity-type-filter/entity-type-filter";
 import { Relacao } from '../../models/relacao.model';
 import { ServicoVla } from '../../services/vla-data.service';
@@ -19,6 +19,7 @@ export class VlaViewer implements OnInit {
   relacoes: Relacao[] = [];
 
   idEntidade: string | null = null;
+  
   filtroAtual: TipoEntidade | null = null;
 
   tiposPresentes: TipoEntidade[] = [];
@@ -36,9 +37,9 @@ export class VlaViewer implements OnInit {
       next: dados => {
         this.entidades = dados.entidades;
         this.relacoes = dados.relacoes;
-        
+
         this.tiposPresentes = Array.from(
-          new Set(this.entidades.map(entidade => entidade.type))
+          new Set(this.entidades.map(entidade => entidade.type as TipoEntidade))
         );
 
         this.recalcularEstadoDerivado();
@@ -49,11 +50,24 @@ export class VlaViewer implements OnInit {
 
   selecionarEntidade(id: string) {
     this.idEntidade = id;
+    this.filtroAtual = null;
     this.recalcularEstadoDerivado();
   }
 
   atualizarFiltro(tipo: TipoEntidade | null) {
     this.filtroAtual = tipo;
+    this.idEntidade = null;
+    this.recalcularEstadoDerivado();
+  }
+
+ limparTudo(): void {
+  this.idEntidade = null;
+  this.filtroAtual = null;
+  this.recalcularEstadoDerivado();
+}
+
+  limparSelecaoEntidade() {
+    this.idEntidade = null;
     this.recalcularEstadoDerivado();
   }
 
@@ -120,8 +134,7 @@ export class VlaViewer implements OnInit {
         return {
           rotuloRelacao: relacao.label,
           entidadeConectada,
-
-          icone: obterIconePorTipo(entidadeConectada.type),
+          icone: obterIconePorTipo(entidadeConectada.type as TipoEntidade), // Cast preventivo
         };
       })
       .filter((vinculo): vinculo is Vinculo => vinculo !== null);

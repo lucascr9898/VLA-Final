@@ -6,14 +6,15 @@
     [relacoes]="relacoesGrafico"
     [filtroAtivo]="filtroAtivo"
     (entidadeSelecionada)="selecionarEntidade($event)"
-    (verRedeCompleta)="restaurarRedeCompleta()">
+    (verRedeCompleta) ="restaurarRedeCompleta()"
+    (limparTudo)="limparTudo()">
   </app-graph-view>
 
   <div class="barraFiltros">
     <app-entity-type-filter
       [filtroAtual]="filtroAtual"
-      [tiposPresentes]="tiposPresentes"
-      (filtroAlterado)="atualizarFiltro($any($event))">
+      [selecionaveis]="tiposPresentes"
+      (filtroAlterado)="atualizarFiltro($event)">
     </app-entity-type-filter>
   </div>
 
@@ -21,7 +22,7 @@
     <app-entity-list
       (entidadeSelecionada)="selecionarEntidade($event)"
       [idEntidade]="idEntidade"
-      [entidades]="entidades">
+      [entidades]="entidadesLista">
     </app-entity-list>
   </div>
 

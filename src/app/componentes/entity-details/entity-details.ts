@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Entidade } from '../../models/entidade.model';
-import { CORES_POR_TIPO, ICONE_POR_TIPO } from '../../shared/entidade-visual';
+import { obterCorPorTipo, obterIconePorTipo } from '../../shared/entidade-visual';
 
 export interface Vinculo {
   rotuloRelacao: string;
@@ -17,12 +17,8 @@ export interface Vinculo {
 export class EntityDetails {
   @Input() selecaoDetalhes: { entidadeDetalhada: Entidade, quantidade: number, vinculos: Vinculo[] } | null = null;
 
-  @Output() entidadeSelecionada = new EventEmitter<string>();
+  obterCor = obterCorPorTipo;
+  obterIcone = obterIconePorTipo;
 
-  readonly cores = CORES_POR_TIPO;
-  readonly icones = ICONE_POR_TIPO;
-
-  selecionarVinculo(id: string) {
-    this.entidadeSelecionada.emit(id);
-  }
+ 
 }

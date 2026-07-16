@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { Entidade } from '../../models/entidade.model';
-import { CORES_POR_TIPO, ICONE_POR_TIPO } from '../../shared/entidade-visual';
+import { obterCorPorTipo, obterIconePorTipo } from '../../shared/entidade-visual';
 
 @Component({
   selector: 'app-entity-list',
@@ -13,11 +13,12 @@ export class EntityList {
   @Input() idEntidade: string | null = null;
 
   @Output() entidadeSelecionada = new EventEmitter<string>();
+  @Output() tipoSelecionado = new EventEmitter<string>();
 
   textoBusca: string = '';
 
-  readonly cores = CORES_POR_TIPO;
-  readonly icones = ICONE_POR_TIPO;
+  obterCor = obterCorPorTipo;
+  obterIcone = obterIconePorTipo;
 
   get entidadesVisiveis(): Entidade[] {
     if (this.textoBusca === '') {
@@ -28,6 +29,11 @@ export class EntityList {
 
   selecionarEntidade(id: string) {
     this.entidadeSelecionada.emit(id);
+  }
+
+  filtrarPorTipo(tipo: string, evento: Event) {
+    evento.stopPropagation();
+    this.tipoSelecionado.emit(tipo);
   }
 
   buscarTexto(valor: string) {

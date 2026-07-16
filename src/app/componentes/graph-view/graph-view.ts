@@ -3,7 +3,7 @@ import * as go from "gojs";
 import { Component, Input, Output, EventEmitter, AfterViewInit, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { Entidade, TipoEntidade } from '../../models/entidade.model';
 import { Relacao } from '../../models/relacao.model';
-import { CORES_POR_TIPO, FORMA_POR_TIPO, ICONE_POR_TIPO, TODOS_OS_TIPOS, escurecerCor } from '../../shared/entidade-visual';
+import { CORES_POR_TIPO, FORMA_POR_TIPO, ICONE_POR_TIPO, TODOS_OS_TIPOS } from '../../shared/entidade-visual';
 
 @Component({
   selector: 'app-graph-view',
@@ -19,6 +19,7 @@ export class GraphView implements AfterViewInit, OnChanges {
 
   @Output() entidadeSelecionada = new EventEmitter<string>();
   @Output() verRedeCompleta = new EventEmitter<void>();
+  @Output() limparTudo = new EventEmitter<void>();
 
   @ViewChild('diagramaGrafo') diagramaGrafoRef!: ElementRef;
 
@@ -28,10 +29,10 @@ export class GraphView implements AfterViewInit, OnChanges {
     const $ = go.GraphObject.make;
 
     this.diagrama = new go.Diagram(this.diagramaGrafoRef.nativeElement, {
-      contentAlignment: go.Spot.Center,
+      initialContentAlignment: go.Spot.Center,
       layout: $(go.ForceDirectedLayout, {
-        defaultSpringLength: 80,
-        defaultElectricalCharge: 100,
+        defaultSpringLength: 150,
+        defaultElectricalCharge: 120,
         isOngoing: false,
       }),
       'undoManager.isEnabled': true,
@@ -55,7 +56,7 @@ export class GraphView implements AfterViewInit, OnChanges {
         curve: go.Curve.Bezier,
         corner: 15,
       },
-      $(go.Shape, { strokeWidth: 1.5, stroke: '#CBD5E1' }),
+      $(go.Shape, { strokeWidth: 1.5, stroke: '#1960b8d2' }),
       $(go.Shape, { toArrow: 'OpenTriangle', fill: null, stroke: '#94A3B8', strokeWidth: 1.5 }),
       $(go.Panel, 'Auto',
         $(go.Shape, 'RoundedRectangle', {
@@ -94,7 +95,7 @@ export class GraphView implements AfterViewInit, OnChanges {
     const conteudo: go.GraphObject[] = [
       $(go.Shape, forma, {
         name: 'FORMA',
-        fill: $(go.Brush, 'Linear', { 0: cor, 1: escurecerCor(cor) }),
+        fill: cor,
         stroke: '#FFFFFF',
         strokeWidth: 2,
         width: 50,
@@ -173,12 +174,7 @@ export class GraphView implements AfterViewInit, OnChanges {
   }
 
   limparGrafo(): void {
-    if (!this.diagrama) {
-      return;
-    }
-    this.diagrama.model = new go.GraphLinksModel({
-      linkKeyProperty: 'id',
-    });
+    this.limparTudo.emit();
   }
 
   restaurarRedeCompleta(): void {
