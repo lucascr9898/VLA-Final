@@ -23,6 +23,7 @@ export class VlaViewer implements OnInit {
   filtroAtual: TipoEntidade | null = null;
 
   tiposPresentes: TipoEntidade[] = [];
+  tiposDisponiveis: TipoEntidade[] = [];
 
   entidadesGrafico: Entidade[] = [];
   relacoesGrafico: Relacao[] = [];
@@ -60,11 +61,16 @@ export class VlaViewer implements OnInit {
     this.recalcularEstadoDerivado();
   }
 
- limparTudo(): void {
-  this.idEntidade = null;
-  this.filtroAtual = null;
-  this.recalcularEstadoDerivado();
-}
+  limparTudo(): void {
+    this.idEntidade = null;
+    this.filtroAtual = null;
+    this.filtroAtivo = false;
+    this.selecaoDetalhes = null;
+    this.entidadesGrafico = [];
+    this.relacoesGrafico = [];
+    this.entidadesLista = [];
+    this.tiposDisponiveis = this.tiposPresentes;
+  }
 
   limparSelecaoEntidade() {
     this.idEntidade = null;
@@ -81,7 +87,8 @@ export class VlaViewer implements OnInit {
     const { entidadesGrafico, relacoesGrafico } = this.calcularGrafico(this.idEntidade, this.filtroAtual);
     this.entidadesGrafico = entidadesGrafico;
     this.relacoesGrafico = relacoesGrafico;
-    this.entidadesLista = this.calcularListaFiltrada(this.filtroAtual);
+    this.entidadesLista = this.entidadesGrafico;
+    this.tiposDisponiveis = this.calcularTiposDisponiveis(this.idEntidade);
     this.filtroAtivo = this.idEntidade !== null || this.filtroAtual !== null;
     this.selecaoDetalhes = this.calcularSelecaoDetalhes(this.idEntidade);
   }
@@ -105,11 +112,16 @@ export class VlaViewer implements OnInit {
     return { entidadesGrafico: entidadesFiltradas, relacoesGrafico: relacoesFiltradas };
   }
 
-  private calcularListaFiltrada(filtroAtual: TipoEntidade | null): Entidade[] {
-    if (filtroAtual === null) {
-      return [...this.entidades];
+  private calcularTiposDisponiveis(idEntidade: string | null): TipoEntidade[] {
+    if (idEntidade === null) {
+      return this.tiposPresentes;
     }
-    return this.entidades.filter(entidade => entidade.type === filtroAtual);
+
+    const relacoesDiretas = this.relacoes.filter(relacao => relacao.source === idEntidade || relacao.target === idEntidade);
+    const idsConexao = new Set([idEntidade, ...relacoesDiretas.flatMap(relacao => [relacao.source, relacao.target])]);
+    const entidadesConectadas = this.entidades.filter(entidade => idsConexao.has(entidade.id));
+
+    return Array.from(new Set(entidadesConectadas.map(entidade => entidade.type as TipoEntidade)));
   }
 
   private calcularSelecaoDetalhes(idEntidade: string | null): { entidadeDetalhada: Entidade, quantidade: number, vinculos: Vinculo[] } | null {

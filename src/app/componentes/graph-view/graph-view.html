@@ -2,6 +2,10 @@
   <div #diagramaGrafo class="diagrama-grafo"></div>
 
   <div class="acoes-grafo">
+    @if (entidades.length === 0) {
+      <p class="mensagem-vazia">Nenhuma entidade selecionada</p>
+    }
+
     <button
       type="button"
       class="botao-acao-grafo"
