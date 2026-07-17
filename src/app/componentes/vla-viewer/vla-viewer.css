@@ -68,6 +68,7 @@
   width: 320px;
 }
 
+
 @media (max-width: 1024px) {
   .colunaLista,
   .detalhesEntidades {
@@ -76,5 +77,82 @@
 
   .barraFiltros {
     max-width: calc(100vw - 520px);
+  }
+}
+
+
+@media (max-width: 768px) {
+  :host {
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .tela-sistema-container {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  .palco-grafo-host {
+    position: relative;
+    inset: auto;
+    order: 1;
+    width: 100%;
+    height: 50vh;
+  }
+
+  .barraFiltros {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    order: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .colunaLista,
+  .detalhesEntidades {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    order: 2;
+    width: 100%;
+    height: 260px;
+    box-sizing: border-box;
+  }
+
+  .detalhesEntidades {
+    order: 3;
+  }
+}
+
+@media (max-width: 480px) {
+  .tela-sistema-container {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .palco-grafo-host {
+    height: 40vh;
+  }
+
+  .barraFiltros {
+    padding: 8px 10px;
+  }
+
+  .colunaLista,
+  .detalhesEntidades {
+    height: 220px;
+    padding: 12px;
   }
 }
