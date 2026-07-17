@@ -57,7 +57,6 @@ export class VlaViewer implements OnInit {
 
   atualizarFiltro(tipo: TipoEntidade | null) {
     this.filtroAtual = tipo;
-    this.idEntidade = null;
     this.recalcularEstadoDerivado();
   }
 
