@@ -82,6 +82,10 @@ export class VlaViewer implements OnInit {
     this.recalcularEstadoDerivado();
   }
 
+  private obterRelacoesDiretas(idEntidade: string): Relacao[] {
+    return this.relacoes.filter(relacao => relacao.source === idEntidade || relacao.target === idEntidade);
+  }
+
   private recalcularEstadoDerivado(): void {
     const { entidadesGrafico, relacoesGrafico } = this.calcularGrafico(this.idEntidade, this.filtroAtual);
     this.entidadesGrafico = entidadesGrafico;
@@ -97,7 +101,7 @@ export class VlaViewer implements OnInit {
     let relacoesFiltradas = [...this.relacoes];
 
     if (idEntidade !== null) {
-      relacoesFiltradas = this.relacoes.filter(relacao => relacao.source === idEntidade || relacao.target === idEntidade);
+      relacoesFiltradas = this.obterRelacoesDiretas(idEntidade);
       const idsConexao = new Set([idEntidade, ...relacoesFiltradas.flatMap(relacao => [relacao.source, relacao.target])]);
       entidadesFiltradas = this.entidades.filter(entidade => idsConexao.has(entidade.id));
     }
@@ -116,7 +120,7 @@ export class VlaViewer implements OnInit {
       return this.tiposPresentes;
     }
 
-    const relacoesDiretas = this.relacoes.filter(relacao => relacao.source === idEntidade || relacao.target === idEntidade);
+    const relacoesDiretas = this.obterRelacoesDiretas(idEntidade);
     const idsConexao = new Set([idEntidade, ...relacoesDiretas.flatMap(relacao => [relacao.source, relacao.target])]);
     const entidadesConectadas = this.entidades.filter(entidade => idsConexao.has(entidade.id));
 
@@ -133,7 +137,7 @@ export class VlaViewer implements OnInit {
       return null;
     }
 
-    const relacoesDiretas = this.relacoes.filter(relacao => relacao.source === idEntidade || relacao.target === idEntidade);
+    const relacoesDiretas = this.obterRelacoesDiretas(idEntidade);
 
     const vinculos: Vinculo[] = relacoesDiretas
       .map(relacao => {

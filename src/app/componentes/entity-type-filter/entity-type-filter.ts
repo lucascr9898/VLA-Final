@@ -15,10 +15,14 @@ export class EntityTypeFilter {
 
   @Output() filtroAlterado = new EventEmitter<TipoEntidade | null>();
 
+  readonly todos = TODOS_OS_TIPOS;
   readonly cores = CORES_POR_TIPO;
   readonly icones = ICONE_POR_TIPO;
 
   filtrarPorTipo(tipo: TipoEntidade): void {
+    if (!this.selecionaveis.includes(tipo)) {
+      return;
+    }
     const novoFiltro = this.filtroAtual === tipo ? null : tipo;
     this.filtroAlterado.emit(novoFiltro);
   }
