@@ -143,8 +143,13 @@ export class GraphView implements AfterViewInit, OnChanges {
   }
 
   private atualizarModel(): void {
+    let temNoNovo = false;
+
     const nodeDataArray = this.entidades.map(e => {
       const existente = this.diagrama.model.findNodeDataForKey(e.id) as { loc?: string } | null;
+      if (!existente) {
+        temNoNovo = true;
+      }
       const loc = existente?.loc ?? go.Point.stringify(new go.Point(Math.random() * 500, Math.random() * 400));
 
       return {
@@ -169,8 +174,10 @@ export class GraphView implements AfterViewInit, OnChanges {
     model.mergeLinkDataArray(linkDataArray);
     this.diagrama.commitTransaction('atualizarDados');
 
-    this.diagrama.layoutDiagram(true);
-    this.diagrama.zoomToFit();
+    if (temNoNovo) {
+      this.diagrama.layoutDiagram(true);
+      this.diagrama.zoomToFit();
+    }
   }
 
   limparGrafo(): void {
