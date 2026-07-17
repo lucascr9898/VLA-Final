@@ -21,10 +21,19 @@ export class EntityList {
   obterIcone = obterIconePorTipo;
 
   get entidadesVisiveis(): Entidade[] {
-    if (this.textoBusca === '') {
-      return this.entidades;
+    const entidadesFiltradas = this.textoBusca === ''
+      ? this.entidades
+      : this.entidades.filter(entidade => entidade.label.toLowerCase().includes(this.textoBusca.toLowerCase()));
+
+    if (this.idEntidade === null) {
+      return entidadesFiltradas;
     }
-    return this.entidades.filter(entidade => entidade.label.toLowerCase().includes(this.textoBusca.toLowerCase()));
+
+    return [...entidadesFiltradas].sort((a, b) => {
+      if (a.id === this.idEntidade) return -1;
+      if (b.id === this.idEntidade) return 1;
+      return 0;
+    });
   }
 
   selecionarEntidade(id: string) {
